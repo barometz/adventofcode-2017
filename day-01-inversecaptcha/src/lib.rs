@@ -1,7 +1,8 @@
 pub fn inverse_captcha(input: &str) -> u32
 {
     let mut sum = 0;
-    if let Some(mut previous) = String::from(input).pop()
+    
+    if let Some(mut previous) = input.chars().last()
     {
         for current in input.chars() {
             if previous == current {
