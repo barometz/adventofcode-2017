@@ -1,6 +1,12 @@
-mod rotate;
+extern crate day_012_inversecaptcha;
+
+use std::io;
 
 fn main() {
-    let rotated = rotate::Rotate::new(&[1, 2], 2);
-    println!("Hello, world!");
+    let mut input = String::new();
+    io::stdin().read_line(&mut input)
+        .expect("Failed to read line");
+
+    let result = day_012_inversecaptcha::inverse_captcha(&input.trim());
+    println!("Result: {}", result);
 }
