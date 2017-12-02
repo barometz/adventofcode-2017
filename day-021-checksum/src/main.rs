@@ -1,4 +1,4 @@
-extern crate day_02_checksum;
+extern crate day_021_checksum;
 
 fn main() {
     let input = 
@@ -19,5 +19,5 @@ fn main() {
 260	352	190	877	118	77	1065	1105	1085	1032	71	87	851	56	1161	667
 1763	464	182	1932	1209	640	545	931	1979	197	1774	174	2074	1800	939	161";
 
-    println!("Result: {}", day_02_checksum::checksum(&input));
+    println!("Result: {}", day_021_checksum::checksum(&input));
 }

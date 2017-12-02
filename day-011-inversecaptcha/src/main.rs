@@ -1,4 +1,4 @@
-extern crate day_01_inversecaptcha;
+extern crate day_011_inversecaptcha;
 
 use std::io;
 
@@ -7,6 +7,6 @@ fn main() {
     io::stdin().read_line(&mut input)
         .expect("Failed to read line");
 
-    let result = day_01_inversecaptcha::inverse_captcha(&input.trim());
+    let result = day_011_inversecaptcha::inverse_captcha(&input.trim());
     println!("Result: {}", result);
 }

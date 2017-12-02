@@ -1,5 +1,5 @@
 [package]
-name = "day-01-inversecaptcha"
+name = "day-011-inversecaptcha"
 version = "0.1.0"
 authors = ["Dominic van Berkel <dominic@baudvine.net>"]
 

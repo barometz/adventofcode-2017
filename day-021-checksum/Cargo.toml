@@ -1,5 +1,5 @@
 [package]
-name = "day-02-checksum"
+name = "day-021-checksum"
 version = "0.1.0"
 authors = ["Dominic van Berkel <dominic@baudvine.net>"]
 
