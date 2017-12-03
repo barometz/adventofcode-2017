@@ -1,16 +1,16 @@
-pub struct Rotate<'a, T: 'a+Copy> {
-    source: &'a [T],
+pub struct Rotate<T> {
+    source: T,
     rotate_by: usize,
     position: usize,
 }
 
-impl<'a, T: Copy> Rotate<'a, T> {
-    pub fn new(source: &'a [T], rotate_by: usize) -> Rotate<'a, T> {
+impl<'a, T: Copy> Rotate<&'a [T]> {
+    pub fn new(source: &'a [T], rotate_by: usize) -> Rotate<&'a [T]> {
         Rotate { source, rotate_by, position: 0 }
     }
 }
 
-impl<'a, T: Copy> Iterator for Rotate<'a, T> {
+impl<'a, T: Copy> Iterator for Rotate<&'a [T]> {
     type Item = T;
     fn next(&mut self) -> Option<T> {
         if self.position < self.source.len() {
@@ -30,13 +30,13 @@ mod test {
 
     #[test]
     fn empty_norotate() {
-        let mut rotated : Rotate<u32> = Rotate::new(&[], 0);
+        let mut rotated : Rotate<&[u32]> = Rotate::new(&[], 0);
         assert_eq!(None, rotated.next());
     }
 
     #[test]
     fn empty_rotated() {
-        let mut rotated : Rotate<u32> = Rotate::new(&[], 1);
+        let mut rotated : Rotate<&[u32]> = Rotate::new(&[], 1);
         assert_eq!(None, rotated.next());
     }
 
