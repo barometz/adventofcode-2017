@@ -48,7 +48,7 @@ fn ring(square: u32) -> u32 {
 impl PartialOrd for Position {
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
         match self.ring.cmp(&other.ring) {
-            cmp::Ordering::Equal => Some(self.offset.cmp(&other.offset)),
+            cmp::Ordering::Equal => self.offset.partial_cmp(&other.offset),
             x => Some(x)
         }
     }

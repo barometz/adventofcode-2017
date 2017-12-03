@@ -1,25 +1,33 @@
-#[macro_use]
-extern crate itertools;
-
 mod coords;
 mod position;
 
 use coords::Coords;
 use position::Position;
 use std::cmp;
+use std::collections::btree_map;
 
 pub fn adjacent_sum(square: u32) -> u32 {
     let position = Position::from_square(square);
-    adjacent_sum_position(position)
+    let mut cache = btree_map::BTreeMap::new();
+    adjacent_sum_position(position, &mut cache)
 }
 
-fn adjacent_sum_position(position: Position) -> u32 {
-    match position.ring {
-        0 => 1,
-        _ => coords::adjacent(&Coords::from(position))
-            .into_iter()
-            .filter(|c| Position::from(*c) < position)
-            .fold(0, |acc, c| acc + adjacent_sum_position(Position::from(c))),
+fn adjacent_sum_position(position: Position, mut cache: &mut btree_map::BTreeMap<Position, u32>) -> u32 {
+    let cached = cache.get(&position).map(|&x| x);
+    
+    match cached {
+        Some(x) => x,
+        None => {
+            let sum = match position.ring {
+                0 => 1,
+                _ => coords::adjacent(&Coords::from(position))
+                    .into_iter()
+                    .filter(|c| Position::from(*c) < position)
+                    .fold(0, |acc, c| acc + adjacent_sum_position(Position::from(c), &mut cache)),
+            };
+            cache.insert(position, sum);
+            sum
+        }
     }
 }
 

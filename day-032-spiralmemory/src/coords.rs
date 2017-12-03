@@ -14,13 +14,10 @@ pub fn adjacent(coords: &Coords) -> Vec<Coords> {
     let x = coords.x;
     let y = coords.y;
 
-    let xs = (x - 1)..(x + 2);
-    let ys = (y - 1)..(y + 2);
-
-    iproduct!(xs, ys)
-        .map(|(x, y)| Coords::new(x, y))
-        .filter(|c| c != coords)
-        .collect()
+    let c = Coords::new;
+    vec![c(x - 1, y + 1), c(x, y + 1), c(x + 1, y + 1),
+         c(x - 1, y),                  c(x + 1, y),
+         c(x - 1, y - 1), c(x, y - 1), c(x + 1, y - 1)]
 }
 
 #[cfg(test)]
