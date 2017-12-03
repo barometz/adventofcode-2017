@@ -11,7 +11,7 @@ pub fn distance(square: u32) -> u32 {
 }
 
 fn distance_between(a: u32, b: u32) -> u32 {
-    let difference = (a as i64) - (b as i64);
+    let difference = i64::from(a) - i64::from(b);
     difference.abs() as u32
 } 
 
