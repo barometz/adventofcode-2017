@@ -4,30 +4,34 @@ mod position;
 use coords::Coords;
 use position::Position;
 use std::cmp;
-use std::collections::btree_map;
+use std::collections::btree_map::BTreeMap;
 
 pub fn adjacent_sum(square: u32) -> u32 {
     let position = Position::from_square(square);
-    let mut cache = btree_map::BTreeMap::new();
-    adjacent_sum_position(position, &mut cache)
+    adjacent_sum_position_cached(position, &mut BTreeMap::new())
 }
 
-fn adjacent_sum_position(position: Position, mut cache: &mut btree_map::BTreeMap<Position, u32>) -> u32 {
-    let cached = cache.get(&position).map(|&x| x);
-    
+fn adjacent_sum_position_cached(position: Position, cache: &mut BTreeMap<Position, u32>) -> u32 {
+    let cached = cache.get(&position).cloned();
     match cached {
         Some(x) => x,
         None => {
-            let sum = match position.ring {
-                0 => 1,
-                _ => coords::adjacent(&Coords::from(position))
-                    .into_iter()
-                    .filter(|c| Position::from(*c) < position)
-                    .fold(0, |acc, c| acc + adjacent_sum_position(Position::from(c), &mut cache)),
-            };
+            let sum = adjacent_sum_position(position, cache);
             cache.insert(position, sum);
             sum
         }
+    }
+}
+
+fn adjacent_sum_position(position: Position, cache: &mut BTreeMap<Position, u32>) -> u32 {
+    match position.ring {
+        0 => 1,
+        _ => coords::adjacent(&Coords::from(position))
+            .into_iter()
+            .filter(|c| Position::from(*c) < position)
+            .fold(0, |acc, c| {
+                acc + adjacent_sum_position_cached(Position::from(c), cache)
+            }),
     }
 }
 
